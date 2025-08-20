@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="dps_kemasan_tree" model="ir.ui.view">
+        <field name="name">dps.kemasan.list</field>
+        <field name="model">dps.kemasan</field>
+        <field name="arch" type="xml">
+            <list default_order="create_date desc">
+                <field name="name"/>
+                <!-- <field name="cn_id"/> -->
+                <field name="container_id"/>
+                <field name="shipment_id"/>
+                <field name="nama_penerima"/>
+                <!-- <field name="no_sppb"/> -->
+                <!-- <field name="tgl_sppb"/> -->
+                <field name="waktu_gatein"/>
+                <field name="waktu_gateout"/>
+                <!-- <field name="status_akhir"/> -->
+                <field name="state" widget="badge" decoration-success="state in ('completed', 'out')" decoration-info="state in ('in', 'xray')" decoration-warning="state in ('atensi', 'spjm')"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="dps_kemasan_form" model="ir.ui.view">
+        <field name="name">dps.kemasan.form</field>
+        <field name="model">dps.kemasan</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,in,completed,out"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <separator string="Core Information"/>
+                            <!-- <field name="cn_id"/> -->
+                            <field name="container_id"/>
+                            <field name="shipment_id"/>
+                            <!-- <field name="lokasi_id"/> -->
+                        </group>
+                        <group>
+                            <separator string="Customs &amp; Gate Information"/>
+                            <!-- <field name="no_sppb"/> -->
+                            <!-- <field name="tgl_sppb"/> -->
+                            <field name="waktu_gatein"/>
+                            <field name="waktu_gateout"/>
+                            <!-- <field name="status_akhir"/> -->
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Details" name="details">
+                             <group>
+                                <field name="nama_pengirim"/>
+                                <field name="nama_penerima"/>
+                                <!-- <field name="uraian_barang"/> -->
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="dps_kemasan_action" model="ir.actions.act_window">
+        <field name="name">Kemasan Items</field>
+        <field name="res_model">dps.kemasan</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!--
+    ================================================================
+    dps.shipment Views
+    ================================================================
+    -->
+
+    <!-- List View (Corrected for Odoo 18) -->
+    <record id="dps_shipment_tree" model="ir.ui.view">
+        <field name="name">dps.shipment.list</field>
+        <field name="model">dps.shipment</field>
+        <field name="arch" type="xml">
+            <list default_order="arrival_date desc">
+                <field name="name"/>
+                <field name="nama_pengangkut"/>
+                <field name="no_voy_flight"/>
+                <field name="arrival_date"/>
+                <!-- <field name="container_count"/> -->
+                <!-- <field name="cn_count"/> -->
+                <field name="kemasan_count"/>
+                <field name="state" widget="badge" decoration-success="state == 'completed'" decoration-info="state in ('in_progress', 'confirmed')"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="dps_shipment_form" model="ir.ui.view">
+        <field name="name">dps.shipment.form</field>
+        <field name="model">dps.shipment</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_confirm" string="Confirm" type="object" invisible="state != 'draft'" class="oe_highlight"/>
+                    <button name="action_reset_to_draft" string="Reset to Draft" type="object" invisible="state == 'draft'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,in_progress,completed"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_containers" type="object" class="oe_stat_button" icon="fa-truck">
+                            <field name="container_count" widget="statinfo" string="Containers"/>
+                        </button>
+                        <!-- <button name="action_view_cn_pibk" type="object" class="oe_stat_button" icon="fa-file-text-o">
+                            <field name="cn_count" widget="statinfo" string="CN/PIBK Docs"/>
+                        </button> -->
+                        <button name="action_view_kemasan" type="object" class="oe_stat_button" icon="fa-cubes">
+                            <field name="kemasan_count" widget="statinfo" string="Kemasan Items"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name" placeholder="Master BL/AWB Number"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <separator string="Shipment Details"/>
+                            <field name="tgl_master"/>
+                            <field name="nama_pengangkut"/>
+                            <field name="no_voy_flight"/>
+                            <field name="call_sign"/>
+                            <field name="depart_date"/>
+                            <field name="arrival_date"/>
+                        </group>
+                        <group>
+                            <separator string="Customs Information"/>
+                            <!-- <field name="kode_kantor_id" options="{'no_open': True}"/>
+                            <field name="kode_jenis_angkut_id" options="{'no_open': True}"/>
+                            <field name="no_bc11"/>
+                            <field name="tgl_bc11"/>
+                            <field name="gudang_id" options="{'no_open': True}"/> -->
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Containers" name="containers">
+                            <field name="container_ids"/>
+                        </page>
+                        <!-- <page string="CN/PIBK Documents" name="cn_pibk_docs">
+                            <field name="cn_ids"/> -->
+                        <!-- </page> -->
+                        <page string="Kemasan Items" name="kemasan_items">
+                            <field name="kemasan_ids"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <!-- Chatter -->
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Window Action (Corrected for Odoo 18) -->
+    <record id="dps_shipment_action" model="ir.actions.act_window">
+        <field name="name">Shipments</field>
+        <field name="res_model">dps.shipment</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

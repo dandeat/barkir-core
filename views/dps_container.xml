@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="dps_container_tree" model="ir.ui.view">
+        <field name="name">dps.container.tree</field>
+        <field name="model">dps.container</field>
+        <field name="arch" type="xml">
+            <list default_order="tanggal_tiba desc" multi_edit="1">
+                <field name="no_container"/>
+                <field name="shipment_id"/>
+                <field name="nama_pengangkut"/>
+                <field name="tanggal_tiba"/>
+                <field name="total_kemasan"/>
+                <field name="state" widget="badge" decoration-success="state in ('completed', 'gate_out')" decoration-info="state in ('arrived', 'gate_in')" decoration-muted="state == 'draft'"/>
+                <field name="pjt" optional="hide"/>
+                <field name="asal_negara" optional="hide"/>
+                <field name="gate_in" optional="hide"/>
+                <field name="gate_out" optional="hide"/>
+                <field name="active" optional="hide" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="dps_container_form" model="ir.ui.view">
+        <field name="name">dps.container.form</field>
+        <field name="model">dps.container</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_set_arrived" string="Set Arrived" type="object" invisible="state != 'draft'" class="oe_highlight"/>
+                    <button name="action_gate_in" string="Gate In" type="object" invisible="state != 'arrived'" class="oe_highlight"/>
+                    <button name="action_gate_out" string="Gate Out" type="object" invisible="state != 'gate_in'" class="oe_highlight"/>
+                    <button name="action_complete" string="Complete" type="object" invisible="state != 'gate_out'" class="oe_highlight"/>
+                    <button name="action_reset_to_draft" string="Reset to Draft" type="object" invisible="state in ('draft', 'completed')"/>
+                    
+                    <field name="state" widget="statusbar" statusbar_visible="draft,arrived,gate_in,gate_out,completed"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_kemasan" type="object" class="oe_stat_button" icon="fa-cubes">
+                            <field name="total_kemasan" widget="statinfo" string="Kemasan Items"/>
+                        </button>
+                    </div>
+                    
+                    <widget name="web_ribbon" title="Archived" bg_color="bg-danger" invisible="active"/>
+                    
+                    <div class="oe_title">
+                        <label for="no_container" class="oe_edit_only"/>
+                        <h1>
+                            <field name="no_container" placeholder="e.g., TGHU1234567"/>
+                        </h1>
+                    </div>
+                    
+                    <group>
+                        <group>
+                            <separator string="Core Information"/>
+                            <field name="shipment_id"/>
+                            <field name="pjt"/>
+                            <field name="no_master"/>
+                        </group>
+                        <group>
+                            <separator string="Arrival &amp; Transport"/>
+                            <field name="nama_pengangkut"/>
+                            <field name="asal_negara"/>
+                            <field name="tanggal_tiba"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                    </group>
+                    
+                    <group string="Gate &amp; System Information">
+                        <group name="gate_ops">
+                            <field name="gate_in" readonly="1"/>
+                            <field name="gate_out" readonly="1"/>
+                        </group>
+                        <group name="sync_info">
+                            <field name="sync_date" readonly="1"/>
+                        </group>
+                    </group>
+                    
+                    <notebook>
+                        <page string="Kemasan Items" name="kemasan_items">
+                            <field name="kemasan_ids">
+                                <list editable="bottom">
+                                    <field name="name"/>
+                                    <field name="nama_penerima"/>
+                                    <field name="nama_pengirim"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="notes" placeholder="Add any additional notes here..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+                
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="dps_container_action" model="ir.actions.act_window">
+        <field name="name">Containers</field>
+        <field name="res_model">dps.container</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

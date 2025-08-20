@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_dps_container_user,dps.container.user,model_dps_container,barkir_core.group_container_user,1,1,1,0
+access_dps_container_manager,dps.container.manager,model_dps_container,barkir_core.group_container_manager,1,1,1,1

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <menuitem
+        id="dps_cn_pibk_root"
+        name="Customs Management"
+        web_icon="barkir_core,static/img/icon.png"
+        sequence="1"/>
+
+    <menuitem
+        id="dps_operations_menu"
+        name="Operations"
+        parent="dps_cn_pibk_root"
+        sequence="10"/>
+
+    <menuitem
+        id="dps_shipment_menu"
+        name="Shipments"
+        parent="dps_operations_menu"
+        action="dps_shipment_action"
+        sequence="5"/>
+
+    <menuitem
+        id="dps_container_menu"
+        name="Containers"
+        parent="dps_operations_menu"
+        action="dps_container_action"
+        sequence="10"/>
+
+    <menuitem
+        id="dps_inventory_menu"
+        name="Inventory"
+        parent="dps_cn_pibk_root"
+        sequence="30"/>
+
+    <menuitem
+        id="dps_kemasan_menu"
+        name="Kemasan Inventory"
+        parent="dps_inventory_menu"
+        action="dps_kemasan_action"
+        sequence="10"/>
+</odoo>
