@@ -101,6 +101,20 @@
         </field>
     </record>
 
+    <!-- Search View -->
+    <record id="dps_container_search" model="ir.ui.view">
+        <field name="name">dps.container.search</field>
+        <field name="model">dps.container</field>
+        <field name="arch" type="xml">
+            <search string="Search Containers">
+                <field name="no_container"/>
+                <field name="nama_pengangkut"/>
+                <filter name="filter_arrived" string="Arrived" domain="[('state', '=', 'arrived')]"/>
+                <filter name="filter_gate_in" string="Gate In" domain="[('state', '=', 'gate_in')]"/>
+            </search>
+        </field>
+    </record>
+
     <record id="dps_container_action" model="ir.actions.act_window">
         <field name="name">Containers</field>
         <field name="res_model">dps.container</field>

@@ -94,6 +94,21 @@
         </field>
     </record>
 
+    <!-- Search View -->
+    <record id="dps_shipment_search" model="ir.ui.view">
+        <field name="name">dps.shipment.search</field>
+        <field name="model">dps.shipment</field>
+        <field name="arch" type="xml">
+            <search string="Search Shipments">
+                <field name="name"/>
+                <field name="nama_pengangkut"/>
+                <field name="no_voy_flight"/>
+                <filter name="filter_completed" string="Completed" domain="[('state', '=', 'completed')]"/>
+                <filter name="filter_in_progress" string="In Progress" domain="[('state', '=', 'in_progress')]"/>
+            </search>
+        </field>
+    </record>
+
     <!-- Window Action (Corrected for Odoo 18) -->
     <record id="dps_shipment_action" model="ir.actions.act_window">
         <field name="name">Shipments</field>
