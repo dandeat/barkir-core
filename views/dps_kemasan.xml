@@ -70,6 +70,20 @@
         </field>
     </record>
 
+    <!-- Search View -->
+    <record id="dps_kemasan_search" model="ir.ui.view">
+        <field name="name">dps.kemasan.search</field>
+        <field name="model">dps.kemasan</field>
+        <field name="arch" type="xml">
+            <search string="Search Kemasan">
+                <field name="name"/>
+                <field name="nama_penerima"/>
+                <filter name="filter_out" string="Out" domain="[('state', '=', 'out')]"/>
+                <filter name="filter_completed" string="Completed" domain="[('state', '=', 'completed')]"/>
+            </search>
+        </field>
+    </record>
+
     <record id="dps_kemasan_action" model="ir.actions.act_window">
         <field name="name">Kemasan Items</field>
         <field name="res_model">dps.kemasan</field>
