@@ -1,3 +1,11 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_dps_shipment_user,dps.shipment.user,model_dps_shipment,barkir_core.group_container_user,1,1,1,0
+access_dps_shipment_manager,dps.shipment.manager,model_dps_shipment,barkir_core.group_container_manager,1,1,1,1
 access_dps_container_user,dps.container.user,model_dps_container,barkir_core.group_container_user,1,1,1,0
 access_dps_container_manager,dps.container.manager,model_dps_container,barkir_core.group_container_manager,1,1,1,1
+access_dps_kemasan_user,dps.kemasan.user,model_dps_kemasan,barkir_core.group_container_user,1,1,1,0
+access_dps_kemasan_manager,dps.kemasan.manager,model_dps_kemasan,barkir_core.group_container_manager,1,1,1,1
+access_dps_pjt_user,dps.pjt.user,model_dps_pjt,barkir_core.group_container_user,1,0,0,0
+access_dps_pjt_manager,dps.pjt.manager,model_dps_pjt,barkir_core.group_container_manager,1,1,1,1
+access_dps_reference_user,dps.reference.user,model_dps_reference,barkir_core.group_container_user,1,1,1,0
+access_dps_reference_manager,dps.reference.manager,model_dps_reference,barkir_core.group_container_manager,1,1,1,1

@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="dps_reference_list" model="ir.ui.view">
+        <field name="name">dps.reference.list</field>
+        <field name="model">dps.reference</field>
+        <field name="arch" type="xml">
+            <list default_order="kode_master, name">
+                <field name="name"/>
+                <field name="uraian"/>
+                <field name="kode_master"/>
+                <field name="master_category_name"/>
+                <field name="active" widget="boolean_toggle" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="dps_reference_form" model="ir.ui.view">
+        <field name="name">dps.reference.form</field>
+        <field name="model">dps.reference</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+
+                    <group>
+                        <field name="uraian"/>
+                        <field name="kode_master"/>
+                        <field name="sequence"/>
+                        <field name="active"/>
+                    </group>
+
+                    <notebook>
+                        <page string="Notes">
+                            <field name="notes"/>
+                        </page>
+                    </notebook>
+
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="dps_reference_search" model="ir.ui.view">
+        <field name="name">dps.reference.search</field>
+        <field name="model">dps.reference</field>
+        <field name="arch" type="xml">
+            <search string="Search References">
+                <field name="name"/>
+                <field name="uraian"/>
+                <field name="kode_master"/>
+                <filter name="filter_active" string="Active" domain="[('active', '=', True)]"/>
+                <filter name="filter_inactive" string="Inactive" domain="[('active', '=', False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Master Reference Actions -->
+    <record id="dps_reference_action_m1" model="ir.actions.act_window">
+        <field name="name">Jenis Aju</field>
+        <field name="res_model">dps.reference</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('kode_master', '=', 1)]</field>
+        <field name="context">{'default_kode_master': 1}</field>
+    </record>
+
+    <record id="dps_reference_action_m2" model="ir.actions.act_window">
+        <field name="name">Kode Jenis PIBK</field>
+        <field name="res_model">dps.reference</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('kode_master', '=', 2)]</field>
+        <field name="context">{'default_kode_master': 2}</field>
+    </record>
+
+    <record id="dps_reference_action_m3" model="ir.actions.act_window">
+        <field name="name">Kode Jenis Angkut</field>
+        <field name="res_model">dps.reference</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('kode_master', '=', 3)]</field>
+        <field name="context">{'default_kode_master': 3}</field>
+    </record>
+
+    <record id="dps_reference_action_m4" model="ir.actions.act_window">
+        <field name="name">Kode Pelabuhan</field>
+        <field name="res_model">dps.reference</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('kode_master', '=', 4)]</field>
+        <field name="context">{'default_kode_master': 4}</field>
+    </record>
+
+    <record id="dps_reference_action_m5" model="ir.actions.act_window">
+        <field name="name">Kode Gudang</field>
+        <field name="res_model">dps.reference</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('kode_master', '=', 5)]</field>
+        <field name="context">{'default_kode_master': 5}</field>
+    </record>
+
+    <record id="dps_reference_action_m6" model="ir.actions.act_window">
+        <field name="name">Kode Negara</field>
+        <field name="res_model">dps.reference</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('kode_master', '=', 6)]</field>
+        <field name="context">{'default_kode_master': 6}</field>
+    </record>
+
+    <record id="dps_reference_action_m7" model="ir.actions.act_window">
+        <field name="name">Jenis Identitas</field>
+        <field name="res_model">dps.reference</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('kode_master', '=', 7)]</field>
+        <field name="context">{'default_kode_master': 7}</field>
+    </record>
+
+    <record id="dps_reference_action_m8" model="ir.actions.act_window">
+        <field name="name">Kode Valuta</field>
+        <field name="res_model">dps.reference</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('kode_master', '=', 8)]</field>
+        <field name="context">{'default_kode_master': 8}</field>
+    </record>
+
+    <record id="dps_reference_action_m9" model="ir.actions.act_window">
+        <field name="name">Kode Pungutan</field>
+        <field name="res_model">dps.reference</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('kode_master', '=', 9)]</field>
+        <field name="context">{'default_kode_master': 9}</field>
+    </record>
+
+    <record id="dps_reference_action_m10" model="ir.actions.act_window">
+        <field name="name">Jenis Kemasan</field>
+        <field name="res_model">dps.reference</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('kode_master', '=', 10)]</field>
+        <field name="context">{'default_kode_master': 10}</field>
+    </record>
+
+    <record id="dps_reference_action_m11" model="ir.actions.act_window">
+        <field name="name">Jenis Tarif</field>
+        <field name="res_model">dps.reference</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('kode_master', '=', 11)]</field>
+        <field name="context">{'default_kode_master': 11}</field>
+    </record>
+
+    <record id="dps_reference_action_m12" model="ir.actions.act_window">
+        <field name="name">Kode Tarif</field>
+        <field name="res_model">dps.reference</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('kode_master', '=', 12)]</field>
+        <field name="context">{'default_kode_master': 12}</field>
+    </record>
+
+    <record id="dps_reference_action_m13" model="ir.actions.act_window">
+        <field name="name">Kode Kantor</field>
+        <field name="res_model">dps.reference</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('kode_master', '=', 13)]</field>
+        <field name="context">{'default_kode_master': 13}</field>
+    </record>
+
+    <record id="dps_reference_action_m14" model="ir.actions.act_window">
+        <field name="name">Kode Kontainer</field>
+        <field name="res_model">dps.reference</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('kode_master', '=', 14)]</field>
+        <field name="context">{'default_kode_master': 14}</field>
+    </record>
+    <record id="dps_reference_action_m15" model="ir.actions.act_window">
+        <field name="name">Jenis Kontainer</field>
+        <field name="res_model">dps.reference</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('kode_master', '=', 15)]</field>
+        <field name="context">{'default_kode_master': 15}</field>
+    </record>
+    <record id="dps_reference_action_m16" model="ir.actions.act_window">
+        <field name="name">Kode Jenis Dokumen TPS</field>
+        <field name="res_model">dps.reference</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('kode_master', '=', 16)]</field>
+        <field name="context">{'default_kode_master': 16}</field>
+    </record>
+    <record id="dps_reference_action_m17" model="ir.actions.act_window">
+        <field name="name">Kode Gudang TPS</field>
+        <field name="res_model">dps.reference</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('kode_master', '=', 17)]</field>
+        <field name="context">{'default_kode_master': 17}</field>
+    </record>
+    <record id="dps_reference_action_m18" model="ir.actions.act_window">
+        <field name="name">Kode Alasan PLP</field>
+        <field name="res_model">dps.reference</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('kode_master', '=', 18)]</field>
+        <field name="context">{'default_kode_master': 18}</field>
+    </record>
+    <record id="dps_reference_action_m19" model="ir.actions.act_window">
+        <field name="name">Kode Barang Kiriman</field>
+        <field name="res_model">dps.reference</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('kode_master', '=', 19)]</field>
+        <field name="context">{'default_kode_master': 19}</field>
+    </record>
+</odoo>

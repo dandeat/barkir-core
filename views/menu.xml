@@ -1,41 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
+    <!-- Root Menu -->
     <menuitem
         id="dps_cn_pibk_root"
         name="Customs Management"
         web_icon="barkir_core,static/img/icon.png"
         sequence="1"/>
 
-    <menuitem
-        id="dps_operations_menu"
-        name="Operations"
-        parent="dps_cn_pibk_root"
-        sequence="10"/>
+    <!-- Operations -->
+    <menuitem id="dps_operations_menu" name="Operations"
+              parent="dps_cn_pibk_root" sequence="10"/>
+    <menuitem id="dps_shipment_menu" name="Shipments"
+              parent="dps_operations_menu" action="dps_shipment_action" sequence="5"/>
+    <menuitem id="dps_container_menu" name="Containers"
+              parent="dps_operations_menu" action="dps_container_action" sequence="10"/>
 
-    <menuitem
-        id="dps_shipment_menu"
-        name="Shipments"
-        parent="dps_operations_menu"
-        action="dps_shipment_action"
-        sequence="5"/>
+    <!-- Inventory -->
+    <menuitem id="dps_inventory_menu" name="Inventory"
+              parent="dps_cn_pibk_root" sequence="30"/>
+    <menuitem id="dps_kemasan_menu" name="Kemasan Inventory"
+              parent="dps_inventory_menu" action="dps_kemasan_action" sequence="10"/>
 
-    <menuitem
-        id="dps_container_menu"
-        name="Containers"
-        parent="dps_operations_menu"
-        action="dps_container_action"
-        sequence="10"/>
+    <!-- Configuration -->
+    <menuitem id="dps_configuration_menu" name="Configuration"
+              parent="dps_cn_pibk_root" sequence="90"/>
 
-    <menuitem
-        id="dps_inventory_menu"
-        name="Inventory"
-        parent="dps_cn_pibk_root"
-        sequence="30"/>
+    <menuitem id="dps_pjt_menu" name="Data PJT"
+              parent="dps_configuration_menu" action="dps_pjt_action" sequence="10"/>
 
-    <menuitem
-        id="dps_kemasan_menu"
-        name="Kemasan Inventory"
-        parent="dps_inventory_menu"
-        action="dps_kemasan_action"
-        sequence="10"/>
+    <!-- Master References -->
+    <menuitem id="dps_reference_menu" name="Master References"
+              parent="dps_configuration_menu" sequence="20"/>
+
+    <menuitem id="dps_reference_menu_m1" name="Jenis Aju"
+              parent="dps_reference_menu" action="dps_reference_action_m1" sequence="10"/>
+    <menuitem id="dps_reference_menu_m2" name="Kode Jenis PIBK"
+              parent="dps_reference_menu" action="dps_reference_action_m2" sequence="20"/>
+    <menuitem id="dps_reference_menu_m3" name="Kode Jenis Angkut"
+              parent="dps_reference_menu" action="dps_reference_action_m3" sequence="30"/>
+    <menuitem id="dps_reference_menu_m4" name="Kode Pelabuhan"
+              parent="dps_reference_menu" action="dps_reference_action_m4" sequence="40"/>
+    <menuitem id="dps_reference_menu_m5" name="Kode Gudang"
+              parent="dps_reference_menu" action="dps_reference_action_m5" sequence="50"/>
+    <menuitem id="dps_reference_menu_m6" name="Kode Negara"
+              parent="dps_reference_menu" action="dps_reference_action_m6" sequence="60"/>
+    <menuitem id="dps_reference_menu_m7" name="Jenis Identitas"
+              parent="dps_reference_menu" action="dps_reference_action_m7" sequence="70"/>
+    <menuitem id="dps_reference_menu_m8" name="Kode Valuta"
+              parent="dps_reference_menu" action="dps_reference_action_m8" sequence="80"/>
+    <menuitem id="dps_reference_menu_m9" name="Kode Pungutan"
+              parent="dps_reference_menu" action="dps_reference_action_m9" sequence="90"/>
+    <menuitem id="dps_reference_menu_m10" name="Jenis Kemasan"
+              parent="dps_reference_menu" action="dps_reference_action_m10" sequence="100"/>
+    <menuitem id="dps_reference_menu_m11" name="Jenis Tarif"
+              parent="dps_reference_menu" action="dps_reference_action_m11" sequence="110"/>
+    <menuitem id="dps_reference_menu_m12" name="Kode Tarif"
+              parent="dps_reference_menu" action="dps_reference_action_m12" sequence="120"/>
+    <menuitem id="dps_reference_menu_m13" name="Kode Kantor"
+              parent="dps_reference_menu" action="dps_reference_action_m13" sequence="130"/>
 </odoo>

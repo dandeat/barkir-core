@@ -25,26 +25,80 @@ class DpsContainer(models.Model):
         tracking=True,
         help='Unique container identification number'
     )
-    
-    no_master = fields.Char(string='Master BL/AWB Number')
-    pjt = fields.Char(
-        string='PJT Provider',
+    jenis_container = fields.Many2one(
+        comodel_name='dps.reference',
+        string='Container Type',
+        required=True,
+        domain="[('kode_master', '=', 15)]",
         tracking=True,
-        help='Penyelenggara Jasa Titipan (Custodian Service Provider)'
+        help='Type of the container, e.g., 20ft, 40ft, etc.'
+    )
+    ukuran_container = fields.Many2one(
+        comodel_name='dps.reference',
+        string='Container Size',
+        required=True,
+        domain="[('kode_master', '=', 16)]",
+        tracking=True,
+        help='Size of the container, e.g., standard, high cube, etc.'
+    )
+    pjt_id = fields.Many2one(
+        comodel_name='dps.pjt',
+        string='PJT',
+        required=True,
+        tracking=True,
+        help='Link to the associated PJT record'
     )
     
-    # === Transport & Arrival Fields ===
+    # === Shipment Details ===
+    shipment_id = fields.Many2one(
+        comodel_name='dps.shipment',
+        string='Shipment',
+        required=True,
+        tracking=True,
+        help='Link to the associated shipment record'
+    )
+    no_master = fields.Char(
+        related='shipment_id.no_master',
+        string='Master BL/AWB Number',
+        help='Master Bill of Lading or Air Waybill number for the shipment'
+    )
+    tgl_master = fields.Date(
+        related='shipment_id.tgl_master',
+        string='Master BL/AWB Date',
+        help='Date of the Master Bill of Lading or Air Waybill'
+    )
+    no_bc11 = fields.Char(
+        related='shipment_id.no_bc11',
+        string='BC 1.1 Number',
+        help='Customs declaration number for the shipment'
+    )
+    tgl_bc11 = fields.Date(
+        related='shipment_id.tgl_bc11',
+        string='BC 1.1 Date',
+        help='Date of the customs declaration for the shipment'
+    )
+    no_voy_flight = fields.Char(
+        related='shipment_id.no_voy_flight',
+        string='Voyage/Flight Number',
+        help='Voyage or flight number associated with the shipment'
+    )
+    shipment_number = fields.Char(
+        related='shipment_id.shipment_number',
+        string='Shipment Number',
+        help='Unique identifier for the shipment'
+    )
+    nama_pengangkut = fields.Char(
+        related='shipment_id.nama_pengangkut',
+        string='Carrier Name',
+        help='Name of the carrier responsible for the shipment'
+    )
+    
+    # === Other Fields ===
     tanggal_tiba = fields.Datetime(
         string='Arrival Date',
         index=True,
         tracking=True,
         help='Date and time when the container arrived'
-    )
-
-    nama_pengangkut = fields.Char(
-        string='Vessel Name',
-        tracking=True,
-        help='Name of the vessel/ship carrying the container'
     )
     asal_negara = fields.Char(
         string='Country of Origin',
@@ -52,7 +106,7 @@ class DpsContainer(models.Model):
         help='Country where the container originated from'
     )
 
-    # === Gate Operations ===
+    # === TPS Gate Operations ===
     gate_in = fields.Datetime(
         string='Gate In TPS',
         tracking=True,
@@ -68,7 +122,7 @@ class DpsContainer(models.Model):
     # === Relational Fields ===
     kemasan_ids = fields.One2many(
         comodel_name='dps.kemasan',
-        inverse_name='container_id',  # <-- Corrected this line
+        inverse_name='container_id', 
         string='Kemasan Items'
     )
     
@@ -99,8 +153,8 @@ class DpsContainer(models.Model):
     # === Computed Fields & Synchronization ===
     total_kemasan = fields.Integer(
         string='Kemasan Count',
-        compute='_compute_total_kemasan',
-        store=True, # Add store=True to make it searchable/sortable
+        compute='_compute_total',
+        store=True, 
         help='Total number of kemasan items inside the container'
     )
 
@@ -110,9 +164,9 @@ class DpsContainer(models.Model):
         help='Date and time of the last synchronization with the external system.'
     )
 
-    # Add the compute method for total_kemasan
+    # Add the compute method for all Total
     @api.depends('kemasan_ids')
-    def _compute_total_kemasan(self):
+    def _compute_total(self):
         for record in self:
             record.total_kemasan = len(record.kemasan_ids)
 

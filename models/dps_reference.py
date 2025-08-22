@@ -29,6 +29,12 @@ class DpsReference(models.Model):
     11 - Jenis Tarif (Tariff Type)
     12 - Kode Tarif (Tariff Code)
     13 - Kode Kantor (Office Code)
+    14 - Kode Kontainer (Container Code)
+    15 - Jenis Kontainer (Container Type)
+    16 - Kode Jenis Dokumen TPS (Document Type Code)
+    17 - Kode Gudang TPS (TPS Warehouse Code)
+    18 - Kode Alasan PLP (PLP Reason Code)
+    19 - Kode Barang Kiriman (Shipment Item Code)
     """
     
     _name = 'dps.reference'
@@ -132,6 +138,12 @@ class DpsReference(models.Model):
             11: 'Jenis Tarif',
             12: 'Kode Tarif',
             13: 'Kode Kantor',
+            14: 'Kode Kontainer',
+            15: 'Jenis Kontainer',
+            16: 'Kode Jenis Dokumen TPS',
+            17: 'Kode Gudang TPS',
+            18: 'Kode Alasan PLP',
+            19: 'Kode Barang Kiriman',
         }
         
         for record in self:

@@ -14,8 +14,9 @@ class DpsShipment(models.Model):
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _description = 'DPS Shipment'
     _order = 'create_date desc'
+    _rec_name = 'no_master'
 
-    # State Fields
+    # === State Fields ===
     state = fields.Selection([
         ('draft', 'Draft'),
         ('confirmed', 'Confirmed'),
@@ -25,57 +26,109 @@ class DpsShipment(models.Model):
     ], string='Status', default='draft', tracking=True)
 
     # === Core Fields ===
-    name = fields.Char(
-        string='Master BL/AWB Number',
-        tracking=True,
-        required=True
-    )
     no_master = fields.Char(
         string='No Master BL/AWB',
         tracking=True,
-        required=True
+        required=True,
+        help='Unique Master Bill of Lading or Air Waybill number'
     )
     tgl_master = fields.Date(
         string='Tanggal Master BL/AWB',
         tracking=True,
-        required=True
+        required=True,
+        help='Date of the Master Bill of Lading or Air Waybill'
     )
-    # shipment details
+
+    # === Shipment Reference Fields ===
     nama_pengangkut = fields.Char(
         string='Nama Pengangkut',
-        tracking=True
+        tracking=True,
+        help='Name of the carrier responsible for the shipment',
     )
     call_sign = fields.Char(
         string='Call Sign',
-        tracking=True
+        tracking=True,
+        help='Call sign of the vessel or aircraft'
     )
+
     no_voy_flight = fields.Char(
         string='No Voy/Flight',
-        tracking=True
+        tracking=True,
+        help='Voyage or flight number associated with the shipment'
     )
     shipment_number = fields.Char(
         string='Shipment Number',
-        tracking=True
+        tracking=True,
+        help='Unique identifier for the shipment'
     )
+
     depart_date = fields.Date(
         string='Tanggal Berangkat',
-        tracking=True
+        tracking=True,
+        help='Departure date of the shipment'
     )
     arrival_date = fields.Date(
         string='Tanggal Tiba',
-        tracking=True
+        tracking=True,
+        help='Arrival date of the shipment'
+    )
+
+    # === Pelabuhan Fields ===
+    pelabuhan_asal = fields.Many2one(
+        comodel_name='dps.reference',
+        string='Pelabuhan Asal',
+        domain="[('kode_master', '=', 4)]",
+        tracking=True,
+        help='Port of origin for the shipment'
+    )
+    pelabuhan_transit = fields.Many2one(
+        comodel_name='dps.reference',
+        string='Pelabuhan Transit',
+        domain="[('kode_master', '=', 4)]",
+        tracking=True,
+        help='Port of transit for the shipment'
+    )
+    pelabuhan_bongkar = fields.Many2one(
+        comodel_name='dps.reference',
+        string='Pelabuhan Bongkar',
+        domain="[('kode_master', '=', 4)]",
+        tracking=True,
+        help='Port of discharge for the shipment'
+    )
+
+    # === Customs Fields ===
+    no_bc11 = fields.Char(
+        string='No BC 11',
+        tracking=True,
+        help='Customs declaration number for the shipment'
+    )
+    tgl_bc11 = fields.Date(
+        string='Tanggal BC 11',
+        tracking=True,
+        help='Date of the customs declaration'
+    )
+    kantor_pelayanan_id = fields.Many2one(
+        comodel_name='dps.reference',
+        string='Kantor Pelayanan',
+        domain="[('kode_master', '=', 13)]",
+        tracking=True,
+        help='Customs office handling the shipment'
     )
 
     # === Relational Fields ===
     container_ids = fields.One2many(
         comodel_name='dps.container',
         inverse_name='shipment_id',
-        string='Container List'
+        string='Container List',
+        tracking=True,
+        help='List of containers associated with this shipment'
     )
     kemasan_ids = fields.One2many(
         comodel_name='dps.kemasan',
         inverse_name='shipment_id',
-        string='Kemasan Items'
+        string='Kemasan Items',
+        tracking=True,
+        help='List of packaging items associated with this shipment'
     )
     # cn_ids = fields.One2many(
     #     comodel_name='dps.cn.pibk',
@@ -87,18 +140,15 @@ class DpsShipment(models.Model):
     container_count = fields.Integer(
         string="Container Count",
         compute='_compute_counts',
-        store=True
+        store=True,
+        help='Count of containers associated with this shipment'
     )
     kemasan_count = fields.Integer(
         string="Kemasan Count",
         compute='_compute_counts',
-        store=True
+        store=True,
+        help='Count of packaging items associated with this shipment'
     )
-    # cn_count = fields.Integer(
-    #     string="CN/PIBK Count",
-    #     compute='_compute_counts',
-    #     store=True
-    # )
 
     @api.depends('container_ids', 'kemasan_ids')
     def _compute_counts(self):
@@ -648,7 +698,7 @@ class DpsShipment(models.Model):
     # def action_see_ko(self):
     #     list_domain = []
     #     if 'active_id' in self.env.context:
-    #         kd_dok_id = self.env['dps.reference'].sudo().search([('kode_master', '=', 16),('name', '=', '6')]).id
+#         kd_dok_id = self.env['dps.reference'].sudo().search([('kode_master', '=', 16),('name', '=', '6')]).id
     #         list_domain.append(('shipment_id', '=', self.env.context['active_id']))
     #         list_domain.append(('kd_dok_id', '=',  kd_dok_id))
     #     return {

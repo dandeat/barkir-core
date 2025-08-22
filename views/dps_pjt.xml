@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="dps_pjt_list" model="ir.ui.view">
+        <field name="name">dps.pjt.list</field>
+        <field name="model">dps.pjt</field>
+        <field name="arch" type="xml">
+            <list default_order="create_date desc" multi_edit="1">
+                <field name="code"/>
+                <field name="nama_pjt"/>
+                <field name="no_id_pemberitahu"/>
+                <field name="jenis_id_pemberitahu"/>
+                <field name="phone"/>
+                <field name="email"/>
+                <field name="tgl_ijin"/>
+                <field name="total_kemasan" widget="statinfo"/>
+                <field name="total_cn"/>
+                <field name="total_container"/>
+                <field name="active" widget="boolean_toggle" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="dps_pjt_form" model="ir.ui.view">
+        <field name="name">dps.pjt.form</field>
+        <field name="model">dps.pjt</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_kemasan" type="object"
+                                class="oe_stat_button" icon="fa-cubes">
+                            <field name="total_kemasan" widget="statinfo" string="Kemasan"/>
+                        </button>
+                    </div>
+
+                    <widget name="web_ribbon" title="Archived" bg_color="bg-danger"
+                            invisible="not active"/>
+
+                    <div class="oe_title">
+                        <label for="code" class="oe_edit_only"/>
+                        <h1>
+                            <field name="code" placeholder="Kode PJT"/>
+                        </h1>
+                    </div>
+
+                    <group string="Core &amp; License Info">
+                        <group>
+                            <field name="nama_pjt"/>
+                            <field name="jenis_id_pemberitahu"/>
+                            <field name="no_id_pemberitahu"/>
+                        </group>
+                        <group>
+                            <field name="no_ijin"/>
+                            <field name="tgl_ijin"/>
+                            <field name="kode_valuta"/>
+                        </group>
+                    </group>
+
+                    <group string="System Credentials">
+                        <group>
+                            <field name="username_ceisa40"/>
+                            <field name="password_ceisa40" password="True"/>
+                            <field name="token_ceisa"/>
+                        </group>
+                        <group>
+                            <field name="odoo_api_url"/>
+                            <field name="odoo_db_name"/>
+                            <field name="odoo_api_key"/>
+                        </group>
+                    </group>
+
+                    <group string="Contact Information">
+                        <group>
+                            <field name="email"/>
+                            <field name="phone"/>
+                            <field name="active"/>
+                        </group>
+                        <group>
+                            <field name="alamat"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Notes">
+                            <field name="notes"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="dps_pjt_search" model="ir.ui.view">
+        <field name="name">dps.pjt.search</field>
+        <field name="model">dps.pjt</field>
+        <field name="arch" type="xml">
+            <search string="Search PJT">
+                <field name="code"/>
+                <field name="nama_pjt"/>
+                <field name="no_id_pemberitahu"/>
+                <filter name="filter_active" string="Active"
+                        domain="[('active','=',True)]"/>
+                <filter name="filter_inactive" string="Inactive"
+                        domain="[('active','=',False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="dps_pjt_action" model="ir.actions.act_window">
+        <field name="name">PJT</field>
+        <field name="res_model">dps.pjt</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

@@ -16,6 +16,8 @@ and packaging (kemasan), including chatter and activity tracking.
         'views/dps_container.xml',
         'views/dps_kemasan.xml',
         'views/dps_shipment.xml',
+        'views/dps_pjt.xml',
+        'views/dps_reference.xml',
         'views/menu.xml',
         # 'views/dps_shipment_views.xml', # Added new view file
         # 'views/dps_container_menus.xml',
